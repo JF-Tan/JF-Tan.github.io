@@ -6,9 +6,97 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <copyright>©2025 JunfuTan.</copyright>
+    <lastBuildDate>Mon, 16 Jun 2025 02:46:20 +0800</lastBuildDate>
     
         <atom:link href="https://jf-tan.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Max Likehood Estimate(MLE)</title>
+      <link>https://jf-tan.github.io/posts/test/</link>
+      <pubDate>Mon, 16 Jun 2025 02:46:20 +0800</pubDate>
+      
+      <guid>https://jf-tan.github.io/posts/test/</guid>
+      <description>&lt;h2 id=&#34;maximal-likehood-estimate-mle&#34;&gt;Maximal Likehood Estimate (MLE)&lt;/h2&gt;
+&lt;p&gt;Here we change to another topic, the probability field.
+We know a lot of prob. distributions, like gassuan, possion, etc.. Now the setting is: you got plenty data samples, and you tell me what is the dist. of these samples thus I can use the dist. to predict other unknow samples.&lt;/p&gt;
+&lt;p&gt;So, now you have the data set:&lt;/p&gt;
+&lt;p&gt;$$ D = [ x_1, x_2, x_3, \dots, x_N ]$$&lt;/p&gt;
+&lt;p&gt;And bunch parameters that we dont know:&lt;/p&gt;
+&lt;p&gt;$$\theta=[ \theta_1,\theta_2,&amp;hellip;\theta_k ]$$&lt;/p&gt;
+&lt;p&gt;Since now we have the dataset samples, we assume they all from the same dist sharing the same parameters.&lt;/p&gt;
+&lt;p&gt;$$
+P(D,\theta)=\prod_{i=1}^{N} P(x_i;\theta)
+$$&lt;/p&gt;
+&lt;p&gt;In probability statistics, the joint probability of observed samples is called likelihood, which is usually represented by the symbol and sometimes also called likelihood function.&lt;/p&gt;
+&lt;p&gt;$$
+L(D,\theta)=\prod_{i=1}^{N} P(x_i;\theta)
+$$&lt;/p&gt;
+&lt;p&gt;We want to max the likehood function then we can find these parameters:&lt;/p&gt;
+&lt;p&gt;$$
+\hat{\theta}=argmaxL(D,\theta)=argmax\prod_{i=1}^{N} P(x_i;\theta)
+$$&lt;/p&gt;
+&lt;p&gt;And we want to avoid multiplying multiple p results in the product approaching 0. So, do the log:&lt;/p&gt;
+&lt;p&gt;$$l(\theta,D)=log(L(D,\theta))$$&lt;/p&gt;
+&lt;p&gt;$$\hat{\theta}=argmax l(D,\theta)=argmax\sum_{i=1}^{N} log(P(x_i;\theta))$$&lt;/p&gt;
+&lt;h2 id=&#34;mle-in-categorical-distribution&#34;&gt;MLE in categorical distribution&lt;/h2&gt;
+&lt;p&gt;Now, there K classes, categorical distribution:&lt;/p&gt;
+&lt;p&gt;$$
+P(x=c_k;\theta)=\theta_k
+$$&lt;/p&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+&lt;p&gt;$$P(x;\theta)=\prod_{k=1}^{K} \theta_k^{1(x,x_k)}$$&lt;/p&gt;
+&lt;p&gt;Also we have to:&lt;/p&gt;
+&lt;p&gt;$$\sum_i \theta_i=1$$&lt;/p&gt;
+&lt;p&gt;Thus, recall the MLE we got:&lt;/p&gt;
+&lt;p&gt;$$L(\theta;D)=\prod_{i=1}^{N} P(x;\theta)=\prod_{i=1}^{N}\prod_{k=1}^{K} \theta_k^{1(x_i,x_k)}$$&lt;/p&gt;
+&lt;p&gt;$$L(\theta;D)=\prod_{k=1}^{K} \theta_k^{n_k}$$&lt;/p&gt;
+&lt;p&gt;$n_k$ is the number of class k shown in the D.
+Thus, we can get log-likehood function:&lt;/p&gt;
+&lt;p&gt;$$l(\theta;D)=\sum_{k=1}^{K} n_klog(\theta_k)=\sum_{k=1}^{K} n_klog(P(x=c_k;\theta))$$&lt;/p&gt;
+&lt;p&gt;Then we can use Lagrange multiplier to find the solution, cuz this is a constraint optimatizion problem:
+$$\hat{\theta}=argmax \sum_{k=1}^{K}n_klog(P(x=c_k;\theta))$$&lt;/p&gt;
+&lt;p&gt;$$La=\sum_{k=1}^{K}n_klog(P(x=c_k;\theta))+\lambda (\sum_{k=1}^{K}\theta_k-1)$$&lt;/p&gt;
+&lt;p&gt;$$La=\sum_{k=1}^{K}n_klog(\theta_k)+\lambda (\sum_{k=1}^{K}\theta_k-1)$$
+Set the partial derivative equal to 0:&lt;/p&gt;
+&lt;p&gt;$$\frac{\partial La}{\partial \theta _k} =\frac{n_k}{\theta_k} + \lambda =0$$&lt;/p&gt;
+&lt;p&gt;$$\frac{\partial La}{\partial \lambda}=\theta_1+\theta_2+&amp;hellip;+\theta_K-1=0$$&lt;/p&gt;
+&lt;p&gt;Thus we got:&lt;/p&gt;
+&lt;p&gt;$$\Rightarrow \lambda=-N$$
+$$\Rightarrow \hat{ \theta_k}=\frac{n_k}{N}$$&lt;/p&gt;
+&lt;p&gt;Back to likehood function:
+$$l(\theta;D)\propto \frac{l(\theta;D)}{N} =\sum_{k=1}^{K} \hat{\theta_k}log(\theta_k)$$
+If we multiply it with -1, we can get the cross-entropy:
+About the entropy, you can see htttp://asdadada&lt;/p&gt;
+&lt;p&gt;$$
+H(p,q)=-\sum_{j=1} p_j log(q_j)
+$$
+Here we go:&lt;/p&gt;
+&lt;p&gt;$$
+-l(\theta;D)\propto -\frac{l(\theta;D)}{N} =-\sum_{k=1}^{K} \hat{\theta_k}log(\theta_k)=H(\theta,\hat{\theta})
+$$&lt;/p&gt;
+&lt;p&gt;So, if we wanna maximize the log-likehood function it means we are minimizing the Corss-Entopy between the two distributions. Also it mean decreasing the KL distance between the two distributions. That make sense!&lt;/p&gt;
+&lt;h2 id=&#34;mle-in-gaussian-distribution&#34;&gt;MLE in gaussian distribution&lt;/h2&gt;
+&lt;p&gt;Now, assume the difference  between $X$ and  $\hat {X}$ fit the gaussian distribution $\mathcal{N}(0,\sigma)$ . Thus $X \sim \mathcal{N}(\hat{X},\sigma)$
+$$
+P(x;\theta)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{}{2\sigma}}
+$$
+Thus, recall the MLE we got:
+$$
+L(\theta;D)=\prod_{i=1}^{N} P(x_i;\theta)=\prod_{i=1}^{N} \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(X-\hat{X})^2}{2\sigma^2}}
+$$&lt;/p&gt;
+&lt;p&gt;Thus, we can get log-likehood function:
+$$
+l(\theta;D)=\sum_{i=1}^{N}log\frac{1}{\sqrt{2\pi\sigma^2}}-\frac{(X-\hat{X})^2}{2\sigma^2}
+$$&lt;/p&gt;
+&lt;p&gt;$$\hat{\theta}=argmax \sum_{k=1}^{K}n_klog(P(x=c_k;\theta))
+$$&lt;/p&gt;
+&lt;p&gt;$$La=\sum_{k=1}^{K}n_klog(P(x=c_k;\theta))+\lambda (\sum_{k=1}^{K}\theta_k-1)
+$$&lt;/p&gt;
+&lt;p&gt;$$La=\sum_{k=1}^{K}n_klog(\theta_k)+\lambda (\sum_{k=1}^{K}\theta_k-1)
+$$&lt;/p&gt;
+</description>
+    </item>
     
   </channel>
 </rss>
