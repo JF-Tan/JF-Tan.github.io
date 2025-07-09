@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><meta name="description" content="Research on Anomaly Detection Methods Based on Diffusion Models link: https://www.arxiv.org/pdf/2401.05702 Quick Shot Gap: 传统异常检测算法基于异常评分的方法，其阈值设定的复杂度高，检测结果可解释性低。 **idea：**用VLLM嵌入到"><title>Paper read: Video Anomaly Detection and Explanation via Large Language Models&nbsp;&ndash;&nbsp;Junfu&#39;s Blog</title><link rel="stylesheet" href="/css/core.min.0e2a5b265b3e3a731c53f1c959c008ba6aa6e8b7816db916127b3515fcc1a95143239a013afb161ae7f9ee498eaa5c0e.css" integrity="sha384-DipbJls&#43;OnMcU/HJWcAIumqm6LeBbbkWEns1FfzBqVFDI5oBOvsWGuf57kmOqlwO"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Paper read: Video Anomaly Detection and Explanation via Large Language Models" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Junfu's Blog</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://google%2ecom"target="_blank" rel="noopener noreferrer">Google</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">Paper read: Video Anomaly Detection and Explanation via Large Language Models</h1></section><article class="article markdown-body"><h1 id="research-on-anomaly-detection-methods-based-on-diffusion-models">Research on Anomaly Detection Methods Based on Diffusion Models</h1>
+<p>link: <a href="https://www.arxiv.org/pdf/2401.05702">https://www.arxiv.org/pdf/2401.05702</a></p>
+<h2 id="quick-shot">Quick Shot</h2>
+<p><strong>Gap:</strong> 传统异常检测算法基于异常评分的方法，其阈值设定的复杂度高，检测结果可解释性低。</p>
+<p>**idea：**用VLLM嵌入到VAD任务。设计了一个新的模块：长期上下文模块用于弥补VLLM在长程作用不足。设计了三阶段的训练方法。</p>
+<p><strong>contribution:</strong>  点数涨了3~4%，还可以为异常输出文本解释原因</p>
+<p><strong>challenges:</strong></p>
+<ol>
+<li>VLLM上下文建模能力低</li>
+<li>VAD数据集基本都是弱监督，只给你一个0-1的异常标签，没有文本指令数据ft</li>
+</ol>
+<p><strong>solutions：</strong></p>
+<ol>
+<li>设计了一个 LongTerm Context (LTC)模块：首先，我们将视频分割成多个片段，并使用 Video-LLaMA 的视频编码器 (VE) 提取每个片段的特征。VADor 以这些特征作为输入，输出每个片段的异常分数。根据topk排序异常分数，把相应片段的特征堆叠为一个列表。给定下一个片段的原始特征，用CA和ADD整合当前正常和异常的特征列表。</li>
+<li>设计了一个3阶段训练：
+<ol>
+<li>第一阶段：先训练一个VADor，检测异常分数。这样可以构建一个新的VAD数据集。</li>
+<li>第二阶段：用VADor和LTC进行联合训练</li>
+<li>第三阶段：基于上述数据集，我们手动编写简单的文本模板（见第 3.1 节）来生成指令调整数据，然后使用这些数据仅训练 Video-LLaMA 的投影层。</li>
+</ol>
+</li>
+</ol>
+<h1 id="method">Method</h1>
+<p><img loading="lazy"  src="/home/tanee/.config/Typora/typora-user-images/image-20250709130832383.png"
+        alt="image-20250709130832383"/></p>
+<p><strong>LTC：</strong></p>
+<p>具体来说，我们收集片段级的 K 个异常分数最低（最高）的 VE 特征，并将它们堆叠成一个正常（异常）列表。我们将正常列表表示为 N将异常列表表示为 A 。这两个列表在线更新，每个新片段都会根据其异常分数立即进行评估，以更新列表（或不更新）。此外，我们在 LTC 模块中引入了交叉注意力机制，将两个列表的信息集成到 VE 特征中。LTC 模块的输出特征不仅作为 AP 的输入，还会与 VE 特征堆叠在一起，作为 LLaMA 的视觉提示（输入嵌入）。基于 LTC 增强的特征，我们能够推导出更鲁棒的 VADor，并为 LLaMA 提供全面的视频上下文。</p>
+<p>**AP：**2层MLP预测分数</p>
+<p>**Adapter：**用于投影proj LTC和VE raw feature融合后的feature到LLaMA的输入embedding空间</p>
+<h3 id="三阶段训练">三阶段训练</h3>
+<p><img loading="lazy"  src="/home/tanee/.config/Typora/typora-user-images/image-20250709134741400.png"
+        alt="image-20250709134741400"/></p>
+<p><strong>第一阶段：</strong> 训VE出来的特征直接进AP学异常得分</p>
+<p><strong>第二阶段：</strong> 训VE出来的和异常相关的feature CA结合的AP 打分器</p>
+<p><strong>第一阶段：</strong> 训练Adaptor proj到正常LLaMA embedding空间</p>
+</article><section class="article labels"><a class="category" href=/categories/vad/>VAD</a><a class="tag" href=/tags/vad/>VAD</a><a class="tag" href=/tags/llm/>LLM</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/periodic_solids/"><span class="iconfont icon-article"></span>Periodic Solids</a></p></section><section class="article discussion"><script 
+            src="https://utteranc.es/client.js" 
+            repo="MetalBlueberry/MetalBlueberry.github.io"
+            issue-term="pathname"
+            label=""
+            theme="github-light"
+            crossorigin="anonymous" async>
+        </script></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2025 JunfuTan.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a>
+<a href='https://ipv6-test.com/validate.php?url=referer'
+  ><img loading="lazy" src='https://ipv6-test.com/button-ipv6-80x15.png' 
+        alt='ipv6 ready' title='ipv6 ready' border='0'
+/></a>
+</p></div></section><script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML" integrity="sha384-e/4/LvThKH1gwzXhdbY2AsjR3rm7LHWyhIG5C0jiRfn8AN2eTN5ILeztWw0H9jmN" crossorigin="anonymous"></script>
+        <script
+            type="text/x-mathjax-config">MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });</script></body>
+
+</html>
