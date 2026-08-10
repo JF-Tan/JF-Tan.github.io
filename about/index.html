@@ -8,22 +8,22 @@
   <!-- Modern Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --bg-color: #f9fafb;
+      --bg-color: #ffffff;
       --container-bg: #ffffff;
-      --text-main: #374151;
-      --text-heading: #111827;
+      --text-main: #333333;
+      --text-heading: #1a1a1a;
       --text-muted: #6b7280;
-      --primary-color: #2563eb;
-      --primary-hover: #1d4ed8;
-      --border-color: #e5e7eb;
-      --badge-bg: #eff6ff;
-      --badge-text: #1e40af;
+      --primary-color: #2b4c7e;
+      --primary-hover: #1d3a63;
+      --border-color: #e5e5e5;
+      --badge-bg: #eef2f7;
+      --badge-text: #2b4c7e;
     }
 
     * {
@@ -33,8 +33,8 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.6;
+      font-family: 'Lora', Georgia, 'Times New Roman', serif;
+      line-height: 1.75;
       color: var(--text-main);
       background-color: var(--bg-color);
       font-size: 16px;
@@ -53,12 +53,20 @@
     }
 
     .container {
-      max-width: 900px;
-      margin: 40px auto;
-      padding: 40px;
-      background: var(--container-bg);
-      border-radius: 16px;
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+      width: 100%;
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 56px clamp(24px, 6vw, 140px) 80px;
+      background: transparent;
+    }
+
+    /* Small UI metadata stays sans-serif for a clean academic contrast */
+    .badge,
+    .edu-dates,
+    .inst-loc,
+    .social-links,
+    .social-links a {
+      font-family: 'Inter', -apple-system, sans-serif;
     }
 
     /* --- Media List for Education --- */
@@ -161,10 +169,12 @@
     }
 
     .profile-info h1 {
-      font-size: 2rem;
-      font-weight: 700;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 2.2rem;
+      font-weight: 600;
       color: var(--text-heading);
       margin-bottom: 8px;
+      letter-spacing: -0.01em;
     }
 
     .profile-bio {
@@ -202,12 +212,14 @@
     }
 
     h2.section-title {
-      font-size: 1.5rem;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.4rem;
       font-weight: 600;
+      letter-spacing: 0.01em;
       color: var(--text-heading);
-      margin-bottom: 20px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid var(--border-color);
+      margin: 48px 0 22px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -236,19 +248,25 @@
     /* --- Publications --- */
     .paper-card {
       display: flex;
-      gap: 24px;
-      margin-bottom: 30px;
-      padding: 20px;
-      border-radius: 12px;
-      background: #fafafa;
-      border: 1px solid var(--border-color);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      gap: 28px;
+      margin-bottom: 0;
+      padding: 24px 0;
+      border-radius: 0;
+      background: transparent;
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.2s ease;
+    }
+
+    .paper-card:first-of-type {
+      padding-top: 4px;
+    }
+
+    .paper-card:last-of-type {
+      border-bottom: none;
     }
 
     .paper-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-      background: #ffffff;
+      background: #fafafa;
     }
 
     .paper-image-container {
@@ -260,8 +278,8 @@
 
     .paper-image {
       width: 100%;
-      border-radius: 8px;
-      border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.06);
       object-fit: contain;
     }
 
@@ -269,12 +287,12 @@
       align-self: flex-start;
       background: var(--badge-bg);
       color: var(--badge-text);
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 20px;
+      padding: 3px 10px;
+      border-radius: 3px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.06em;
     }
 
     .paper-content {
@@ -282,7 +300,8 @@
     }
 
     .paper-title {
-      font-size: 1.1rem;
+      font-family: 'Lora', Georgia, serif;
+      font-size: 1.15rem;
       font-weight: 600;
       margin-bottom: 6px;
       line-height: 1.4;
@@ -318,11 +337,42 @@
       margin-bottom: 4px;
     }
 
+    /* --- Publications (APA reference list) --- */
+    ol.references {
+      list-style: none;
+      counter-reset: ref;
+      padding: 0;
+      margin: 0;
+    }
+
+    ol.references li {
+      counter-increment: ref;
+      margin-bottom: 14px;
+      padding-left: 2.4em;
+      text-indent: -2.4em; /* hanging indent */
+      line-height: 1.65;
+    }
+
+    ol.references li::before {
+      content: "[" counter(ref) "] ";
+      color: var(--text-muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85em;
+    }
+
+    ol.references em {
+      font-style: italic;
+    }
+
+    ol.references li a {
+      word-break: break-all;
+    }
+
     /* --- Responsive Design --- */
     @media (max-width: 768px) {
       .container {
-        margin: 20px;
-        padding: 24px;
+        margin: 0;
+        padding: 32px 20px 56px;
       }
       
       .profile-header {
@@ -362,7 +412,7 @@
         <h1>Junfu Tan (谭钧夫)</h1>
         <p class="profile-bio"> Generative Models, Geometric Neural Network  and AI4Science.</p>
         <ul class="social-links">
-          <li><i class="fa fa-fw fa-map-marker-alt"></i> China</li>
+          <li><i class="fa fa-fw fa-map-marker-alt"></i> Hong Kong</li>
           <li><a href="mailto:jtan370@gatech.edu"><i class="fas fa-fw fa-envelope"></i> Email</a></li>
           <li><a href="https://github.com/jf-tan"><i class="fab fa-fw fa-github"></i> Github</a></li>
         </ul>
@@ -371,8 +421,10 @@
 
     <!-- About Me -->
     <section id="about">
+      <s>jtan370@gatech.edu</s>
+      <p>Email: junfu.tan [at] connect.hku.hk</p>
       <!-- <p>I am currently working on generative models, open-world learning, and AI4SCience. If you have any academic collaboration intentions, please feel free to email <a href="mailto:jtan370@gatech.edu">jtan370@gatech.edu</a>.</p> -->
-      <p>I am an incoming Ph.D. student at <a href="https://www.hku.hk/" target="_blank">HKU</a>, co-supervised by  
+      <p>I am a  Ph.D. student at <a href="https://www.hku.hk/" target="_blank">HKU</a>, co-supervised by  
       <a href="https://www.eee.hku.hk/~ffwang/Team.html" target="_blank">Feifei Wang</a>, 
       <a href="https://liangqiong.github.io/" target="_blank">Liangqiong Qu</a>.
        <!-- and  <a href="https://scholar.google.com/citations?user=yWdvb8YAAAAJ&hl=en" target="_blank">Hongjie Dai </a>.  -->
@@ -397,7 +449,7 @@
     </section> -->
 <!-- Educations -->
 <section id="educations">
-  <h2 class="section-title">📖 Education</h2>
+  <h2 class="section-title">Education</h2>
   
   <ul class="media-list">
     
@@ -408,7 +460,7 @@
       <div class="media-body">
         <div class="media-row">
           <div class="inst-name">The University of Hong Kong (HKU)</div>
-          <div class="inst-loc">Hong Kong</div>
+          <!-- <div class="inst-loc">Hong Kong</div> -->
         </div>
         <div class="media-row">
           <div class="degree-info">Ph.D. Student in Electrical and Computer Engineering (ECE)</div>
@@ -424,7 +476,7 @@
       <div class="media-body">
         <div class="media-row">
           <div class="inst-name">Georgia Institute of Technology & Tianjin University</div>
-          <div class="inst-loc">Shenzhen / Tianjin</div>
+          <!-- <div class="inst-loc">Shenzhen / Tianjin</div> -->
         </div>
         <div class="media-row">
           <div class="degree-info">Dual M.S. in Electrical and Computer Engineering (ECE)</div>
@@ -440,7 +492,7 @@
       <div class="media-body">
         <div class="media-row">
           <div class="inst-name">Nanjing University of Science and Technology</div>
-          <div class="inst-loc">Nanjing</div>
+          <!-- <div class="inst-loc">Nanjing</div> -->
         </div>
         <div class="media-row">
           <div class="degree-info">B.E. in Computer Science (CS)</div>
@@ -453,7 +505,7 @@
 </section>
     <!-- Internships -->
     <section id="internships">
-      <h2 class="section-title">💻 Internships</h2>
+      <h2 class="section-title">Internships</h2>
       <ul class="standard-list">
         <!-- <li><em>2025.01 - 2025.06</em>, <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-ai-for-science/">Microsoft Research, AI for Science</a>, Shanghai.</li> -->
           <li class="media-item">
@@ -461,11 +513,11 @@
       <img src="./images/msr.png"  class="media-logo">
       <div class="media-body">
         <div class="media-row">
-          <div class="inst-name">Microsoft</div>
+          <div class="inst-name">Microsoft Research</div>
           <div class="inst-loc">Shanghai</div>
         </div>
         <div class="media-row">
-          <div class="degree-info">AI4Science Research Intern</div>
+          <div class="degree-info">Research Intern</div>
           <div class="edu-dates"><em>Jan. 2025 - Jul. 2025</em></div>
         </div>
       </div>
@@ -475,7 +527,7 @@
 
     <!-- News -->
     <section id="news">
-      <h2 class="section-title">🔥 News</h2>
+      <h2 class="section-title">News</h2>
       <ul class="standard-list">
         <li><em>2026.02:</em> 🎉 A Diffusion model paper accepted by CVPR 2026</li>
         <li><em>2025.07:</em> 🎉 An Open-Set Recognition paper accepted by ICCV 2025</li>
@@ -485,105 +537,101 @@
 
     <!-- Publications -->
     <section id="publications">
-      <h2 class="section-title">📝 Publications</h2>
+      <h2 class="section-title">Publications</h2>
+        <h4>  † co-first author</h4>
+        
+      <ol class="references">
+       
+      <li>
+        <a href="https://openaccess.thecvf.com/content/CVPR2026/html/Tan_Low-Rank_Residual_Diffusion_Models_CVPR_2026_paper.html">
+          Low-Rank residual diffusion models</a>.<br>
+        <b>Junfu Tan</b>, Jiang Yuan.
+        <i>Computer Vision and Pattern Recognition (<b>CVPR</b>), 2026.<br>
+      </li>
 
-       <div class="paper-card">
-        <div class="paper-image-container">
-          <span class="badge">CVPR 2026</span>
-          <img src="images/lrdm.png" alt="LRDM" class="paper-image" />
-        </div>
-        <div class="paper-content">
-          <h3 class="paper-title"><a href="https://openaccess.thecvf.com/content/CVPR2026/html/Tan_Low-Rank_Residual_Diffusion_Models_CVPR_2026_paper.html" target="_blank">Low-Rank Residual Diffusion Models</a></h3>
-          <p class="paper-authors"><strong>Junfu Tan</strong>, Jiang Yuan</p>
-          <ul class="paper-highlights">
-            <li>A bidirectional reasoning mechanism is proposed: through forward visual feature refinement and reverse multimodal semantic guidance (based on CVAE)</li>
-          </ul>
-        </div>
-      </div>
+      <li>
+        <a href="https://openaccess.thecvf.com/content/ICCV2025/html/Tan_MPBR_Multimodal_Progressive_Bidirectional_Reasoning_for_Open-Set_Fine-Grained_Recognition_ICCV_2025_paper.html">
+          MPBR: Multimodal Progressive Bidirectional Reasoning for Open-Set Fine-Grained Recognition</a>.<br>
+        <b>Junfu Tan</b>, Peiguang Jing, Yu Zhu, Yu Liu. 
+        <i>International Conference on Computer Vision (<b>ICCV</b>), 2025.<br>
+      </li>
 
-       <div class="paper-card">
-        <div class="paper-image-container">
-          <span class="badge">ICCV 2025</span>
-          <img src="images/mpbr.png" alt="MPBR" class="paper-image" />
-        </div>
-        <div class="paper-content">
-          <h3 class="paper-title"><a href="https://openaccess.thecvf.com/content/ICCV2025/html/Tan_MPBR_Multimodal_Progressive_Bidirectional_Reasoning_for_Open-Set_Fine-Grained_Recognition_ICCV_2025_paper.html" target="_blank">MPBR: Multimodal Progressive Bidirectional Reasoning for Open-Set Fine-Grained Recognition</a></h3>
-          <p class="paper-authors"><strong>Junfu Tan</strong>, Peiguang Jing, Yu Zhu, Liuyu</p>
-          <ul class="paper-highlights">
-            <li>A bidirectional reasoning mechanism is proposed: through forward visual feature refinement and reverse generative guidance.</li>
-          </ul>
-        </div>
-      </div>
+      <li>
+        <a href="https://arxiv.org/abs/2605.07927">
+          MatterSim-MT: A multi-task foundation model for in silico materials characterization</a>.<br>
+        Han Yang , Xixian Liu , Chenxi Hu , Yichi Zhou , Yu Shi , Chang Liu , <b>Junfu Tan†</b> , Jielan Li , Guanzhi Li , Qian Wang , Yu Zhu , Zekun Chen , Shuizhou Chen , Fabian Thiemann , Claudio Zeni , Matthew Horton , Robert Pinsler ,Andrew Fowler , Daniel Zügner , Tian Xie , Lixin Sun , Yicheng Chen , Lingyu Kong , Yeqi Bai , Deniz Gunceler , Frank Noé , Hongxia Hao , Ziheng Lu. 
+        <i>	arXiv:2605.07927, 2026.<br>
+      </li>
 
-      <div class="paper-card">
-        <div class="paper-image-container">
-          <span class="badge">ARXIV</span>
-          <img src="images/arxiv.png" alt="MatterSim-MT" class="paper-image" />
-        </div>
-        <div class="paper-content">
-          <h3 class="paper-title"><a href="https://arxiv.org/abs/2605.07927" target="_blank">MatterSim-MT: A multi-task foundation model for in silico materials characterization</a></h3>
-          <p class="paper-authors">Han Yang, Xixian Liu, Chenxi Hu, Yichi Zhou, Yu Shi, Chang Liu, <strong>Junfu Tan†</strong>, Jielan Li, Guanzhi Li, Qian Wang, Yu Zhu, Zekun Chen, Shuizhou Chen, Fabian Thiemann, Claudio Zeni, Matthew Horton, Robert Pinsler, Andrew Fowler, Daniel Zügner, Tian Xie, Lixin Sun, Yicheng Chen, Lingyu Kong, Yeqi Bai, Deniz Gunceler, Frank Noé, Hongxia Hao, Ziheng Lu</p>
-          <ul class="paper-highlights">
-            <li>Material property characterization encounters major bottlenecks. This work presents MatterSim-MT, a materials multitask foundation model. Pre-trained on extensive datasets and fine-tuned for diverse physical properties, it delivers high-precision complex material simulations. Boasting strong scalability and adaptability, it enables efficient, accurate material simulation and characterization.</li>
-          </ul>
-        </div>
-      </div>
+      <li>
+        <a href="https://arxiv.org/abs/2604.03547">
+          KappaFormer: Physics-aware Transformer for lattice thermal conductivity via cross-domain transfer learning</a>.<br>
+       Mengfan Wu, <b>Junfu Tan†</b>, Yu Zhu, Jie Ren. 
+        <i>			arXiv:2604.03547, 2026.<br>
+      </li>
+
+      <li>
+        <a href="https://arxiv.org/abs/2604.27636">
+          Generative structure search for efficient and diverse discovery of molecular and crystal structures</a>.<br>
+       Yifang Qin, Yu Shi, <b>Junfu Tan</b>, Chang Liu, Ming Zhang, Ziheng Lu. 
+        <i>			arXiv:2604.27636, 2026.<br>
+      </li>
+
+      
 
 
+      <li>
+        <a href="https://arxiv.org/abs/2503.11568">
+          Probing the Limit of Heat Transfer in Inorganic Crystals with Deep Learning</a>.<br>
+        Jielan Li, Zekun Chen, Qian Wang, Han Yang, Ziheng Lu, Guanzhi Li, Shuizhou Chen, Yu Zhu, Xixian Liu, <b>Junfu Tan </b>, Mingfa Tang, Yichi Zhou, Claudio Zeni, Andrew Fowler, Daniel Zügner, Robert Pinsler, Matthew Horton, Tian Xie, Tie-Yan Liu, Haiguang Liu, Tao Qin, Bing Lv, Davide Donadio, Hongxia Hao. 
+        <i>		arXiv:2503.11568, 2025.<br>
+      </li>
+
+      <li>
+        <a href="https://arxiv.org/abs/2602.01325">
+          Unified ROI-based Image Compression Paradigm with Generalized Gaussian Model</a>.<br>
+       Kai Hu, <b>Junfu Tan</b>, Fang Xu, Ramy Samy, Yu Liu. 
+        <i>		arXiv:2503.11568, 2025.<br>
+      </li>
+      
+    
+
+      <h4>  2024 and before</h4>
+
+       <li>
+        <a href="https://www.frontiersin.org/journals/materials/articles/10.3389/fmats.2023.1283151/full">
+          Laser ultrasonic time-domain synthetic aperture focusing (SAFT) co-overlay software and hardware (COSH) computing system based on ZYNQ</a>.<br>
+       <b>Junfu Tan</b>, Chenyin Ni, Chanjuan Wu, Kaining Ying, Lunan Dai, Zhonghua Shen. 
+        <i>		<b>Front. Mater.</b>, 2024.<br>
+      </li>
+
+      <li>
+        <a href="https://www.jgjs.net.cn/en/article/doi/10.7510/jgjs.issn.1001-3806.2024.01.017?viewType=HTML">
+        Research on laser ultrasonic wavefield based on physical-informed neural network</a>.<br>
+       Xin Yan,  Kaining Ying,  Lunan Dai, <b>Junfu Tan</b> , Zhonghua Shen ,  Chenyin Ni. 
+        <i>		<b> Laser Technology</b>, 2024.<br>
+      </li>
+
+      <li>
+        <a href="https://www.opticsjournal.net/Articles/OJc8c14f1e5f42f4dc/FullText">
+        Research on Laser Ultrasonic Total Focusing Imaging Method Based on ZYNQ Acceleration</a>.<br>
+      Chanjuan Wu , Kaining  Ying ,  Lunan Dai, <b>Junfu Tan</b> , Zhonghua Shen ,  Chenyin Ni. 
+        <i>		<b> Chinese Journal of Lasers</b>, 2024.<br>
+      </li>
+      
 
 
-      <div class="paper-card">
-        <div class="paper-image-container">
-          <span class="badge">Arxiv</span>
-          <img src="images/arxiv.png" alt="Heat transfer limit" class="paper-image" />
-        </div>,
-        <div class="paper-content">
-          <h3 class="paper-title"><a href="https://arxiv.org/abs/2604.03547" target="_blank">KappaFormer: Physics-aware Transformer for lattice thermal conductivity via cross-domain transfer learning</a></h3>
-          <p class="paper-authors">Mengfan Wu, <strong>Junfu Tan†</strong>, Yu Zhu, Jie Ren</p>
-          <ul class="paper-highlights">
-            <li>To address the challenge of data scarcity in predicting lattice thermal conductivity, we have developed KappaFormer—a model that integrates physical mechanisms—to efficiently screen for low-thermal-conductivity materials and elucidate their heat conduction mechanisms, thereby facilitating the discovery of novel materials.</li>
-            <!-- <li>Proposed efficient screening methods and established databases: For the first time, metal materials (such as MnV) with both high lattice and electronic thermal conductivity were discovered, and an open database of thermal conductivity materials was built to provide tools and resources for future material design.</li> -->
-          </ul>
-        </div>
-      </div>
-
-            <div class="paper-card">
-        <div class="paper-image-container">
-          <span class="badge">Arxiv</span>
-          <img src="images/arxiv.png" alt="Heat transfer limit" class="paper-image" />
-        </div>
-        <div class="paper-content">
-          <h3 class="paper-title"><a href="https://arxiv.org/abs/2503.11568" target="_blank">Probing the Limit of Heat Transfer in Inorganic Crystals with Deep Learning</a></h3>
-          <p class="paper-authors">Jielan Li, Zekun Chen, Qian Wang, Han Yang, Ziheng Lu, Guanzhi Li, Shuizhou Chen, Yu Zhu, Xixian Liu, <strong>Junfu Tan</strong>, Mingfa Tang, Yichi Zhou, Claudio Zeni, Andrew Fowler, Daniel Zügner, Robert Pinsler, Matthew Horton, Tian Xie, Tie-Yan Liu, Haiguang Liu, Tao Qin, Bing Lv, Davide Donadio, Hongxia Hao</p>
-          <ul class="paper-highlights">
-            <li>Leveraging deep learning and first-principles calculations, this study conducted a large-scale screening of the thermal conductivity of inorganic crystals. It confirmed that diamond represents the upper limit of thermal conductivity for stable crystals under ambient pressure, and also identified over twenty novel crystals exhibiting superior thermal conductivity compared to silicon. These findings and the screening methodology serve as a valuable reference for materials research and development.</li>
-            <!-- <li>Proposed efficient screening methods and established databases: For the first time, metal materials (such as MnV) with both high lattice and electronic thermal conductivity were discovered, and an open database of thermal conductivity materials was built to provide tools and resources for future material design.</li> -->
-          </ul>
-        </div>
-      </div>
-
-      <!-- Paper 3 -->
-      <div class="paper-card">
-        <div class="paper-image-container">
-          <span class="badge">Front. Mater. 2024</span>
-          <img src="images/saftcosh.png" alt="SAFT-COSH system" class="paper-image" />
-        </div>
-        <div class="paper-content">
-          <h3 class="paper-title"><a href="https://www.frontiersin.org/journals/materials/articles/10.3389/fmats.2023.1283151/">Laser ultrasonic time-domain synthetic aperture focusing (SAFT) co-overlay software and hardware (COSH) computing system based on ZYNQ</a></h3>
-          <p class="paper-authors"><strong>Junfu Tan</strong>, Chenyin Ni, Chanjuan Wu, Kaining Ying, Lunan Dai, Zhonghua Shen</p>
-          <ul class="paper-highlights">
-            <li>SAFT-COSH significantly accelerates DAS-SAFT: The hardware-software collaboration based on Zynq reduces the computing time to 1/28 of the original.</li>
-            <!-- <li>Supports real-time imaging, low cost and high efficiency: While ensuring imaging quality, it meets the needs of real-time 3D defect detection.</li> -->
-          </ul>
-        </div>
-      </div>
+    </ol>
 
     
 
     </section>
-    <script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=6uZ_jKmPU_WcDuWCQhiBvIGUYhGQZc0xI2v3X2EdYEw&cl=ffffff&w=a"></script>
+
+<script type="text/javascript" id="mapmyvisitors" src="//mapmyvisitors.com/map.js?d=6uZ_jKmPU_WcDuWCQhiBvIGUYhGQZc0xI2v3X2EdYEw&cl=ffffff&w=a"></script>
 
   </div>
 
+
+  
 </body>
 </html>
